@@ -5,6 +5,10 @@
 #include <unistd.h>
 #include <sys/mman.h>
 
+#ifndef GBYTES
+#define GBYTES 1
+#endif
+
 // https://stackoverflow.com/questions/9596945/how-to-get-appropriate-timestamp-in-c-for-logs
 char *timestamp()
 {
@@ -14,13 +18,13 @@ char *timestamp()
 }
 
 int main() {
-  size_t bytes = 1073741824;
+  size_t bytes = 1073741824UL * GBYTES;
   unsigned int tests = 0;
   unsigned char total = 0;
 
   printf("=== Bitflipped ===\n");
   printf("==================\n");
-  printf("Allocating a gigabyte ...\n");
+  printf("Allocating %d gigabytes ...\n", GBYTES);
   unsigned char *buffer = (unsigned char *)calloc(bytes, 1);
 
   // Ensure the buffer is actually resident in RAM
